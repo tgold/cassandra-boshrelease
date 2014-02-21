@@ -1,6 +1,12 @@
 # Cassandra storage config YAML 
 <%
 cassandra = properties.cassandra
+
+jobname = spec.job.name
+networkname = spec.networks.methods(false).grep(/[^=]$/).first.to_s
+deployment = spec.deployment
+boshtype = "microbosh"
+instances_max = cassandra.instances - 1
 %>
 # NOTE:
 #   See http://wiki.apache.org/cassandra/StorageConfiguration for
@@ -97,7 +103,7 @@ seed_provider:
       parameters:
           # seeds is actually a comma-delimited list of addresses.
           # Ex: "<ip1>,<ip2>,<ip3>"
-          - seeds: "127.0.0.1"
+          - seeds: <% for index in (0..instances_max) %><%= index %>.<%= jobname %>.<%= networkname %>.<%= deployment %>.<%= boshtype %><% if index < instances_max %>,<% end %><% end %>
 
 # emergency pressure valve: each time heap usage after a full (CMS)
 # garbage collection is above this fraction of the max, Cassandra will
