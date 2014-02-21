@@ -7,6 +7,8 @@ networkname = spec.networks.methods(false).grep(/[^=]$/).first.to_s
 deployment = spec.deployment
 boshtype = "microbosh"
 instances_max = cassandra.instances - 1
+
+token = (spec.index*(2**127)/instances_max)
 %>
 # NOTE:
 #   See http://wiki.apache.org/cassandra/StorageConfiguration for
@@ -27,7 +29,7 @@ cluster_name: '<%= cassandra.cluster_name %>'
 # the heaviest-loaded existing node.  If there is no load information
 # available, such as is the case with a new cluster, it will pick
 # a random token, which will lead to hot spots.
-initial_token:
+initial_token: <%= token %>
 
 # See http://wiki.apache.org/cassandra/HintedHandoff
 hinted_handoff_enabled: true
