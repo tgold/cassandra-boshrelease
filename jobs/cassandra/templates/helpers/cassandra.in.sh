@@ -24,3 +24,5 @@ export CLASSPATH=$CASSANDRA_CONF:$cassandra_bin:$CLASSPATH
 for jar in $CASSANDRA_HOME/lib/*.jar; do
     export CLASSPATH=$CLASSPATH:$jar
 done
+
+export JVM_OPTS="${JVM_OPTS} -Djava.net.preferIPv4Stack=true  -Djava.rmi.server.hostname=0.0.0.0 -Dcom.sun.management.jmxremote.port=7199 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false"
