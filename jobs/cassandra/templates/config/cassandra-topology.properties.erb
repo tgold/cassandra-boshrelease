@@ -21,8 +21,9 @@ jobname = spec.job.name
 networkname = spec.networks.methods(false).grep(/[^=]$/).first.to_s
 deployment = spec.deployment 
 boshtype = "microbosh"
+instances_max = cassandra.instances - 1
 %>
-<% for index in cassandra.instances %>
+<% for index in (0..instances_max) %>
 <%= index %>.<%= jobname %>.<%= networkname %>.<%= deployment %>.<%= boshtype %>=DC1:RAC1
 <% end %>
 
