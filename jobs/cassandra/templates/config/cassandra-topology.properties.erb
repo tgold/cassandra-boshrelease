@@ -16,13 +16,13 @@
 
 # Cassandra Node IP=Data Center:Rack
 <%
-properties = properties.cassandra
+cassandra = properties.cassandra
 jobname = spec.job.name
 networkname = spec.networks.methods(false).grep(/[^=]$/).first.to_s
 deployment = spec.deployment 
 boshtype = "microbosh"
 %>
-<% for index in properties.instances %>
+<% for index in cassandra.instances %>
 <%= index %>.<%= jobname %>.<%= networkname %>.<%= deployment %>.<%= boshtype %>=DC1:RAC1
 <% end %>
 
